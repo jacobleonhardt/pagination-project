@@ -11,7 +11,7 @@ export const List = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`https://dog.ceo/api/breeds/list/allS`)
+        const res = await fetch(`https://dog.ceo/api/breeds/list/all`)
         if(!res.ok) throw Error('Fetch request did return data as expected.')
 
         const data = await res.json()
@@ -25,9 +25,11 @@ export const List = () => {
   }, [])
 
   return (
-    <div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       {fetchError && <ErrorMessage error={fetchError} />}
-      {breedList.map(breed => <BreedLink key={breedList.indexOf(breed)} breed={breed} />)}
+      <ul className='list-group'>
+        {breedList.map(breed => <BreedLink key={breedList.indexOf(breed)} breed={breed} />)}
+      </ul>
     </div>
   )
 }
