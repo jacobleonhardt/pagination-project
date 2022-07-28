@@ -30,9 +30,10 @@ function App() {
     <div className="App">
       <header>
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-          BREEDS
+          <ion-icon name="paw"></ion-icon>
         </button>
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+          <button type="button" className='btn btn-dark' data-bs-dismiss="offcanvas" aria-label="Close"><ion-icon name="close"></ion-icon></button>
           <List breedList={breedList} />
         </div>
       </header>
