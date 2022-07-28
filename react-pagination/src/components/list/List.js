@@ -11,7 +11,7 @@ export const List = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`https://dog.ceo/api/breeds/list/all`)
+        const res = await fetch(`https://dog.ceo/api/breeds/list/allS`)
         if(!res.ok) throw Error('Fetch request did return data as expected.')
 
         const data = await res.json()
