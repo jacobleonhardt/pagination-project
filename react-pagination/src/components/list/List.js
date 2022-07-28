@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from 'react'
-// import { BreedLink } from './BreedLink'
+import { BreedLink } from './BreedLink'
+import { ErrorMessage } from './ErrorMessage'
 
 export const List = () => {
 
   const [dogList, setDogList] = useState({})
-  const [err, setErr] = useState(null)
+  const [fetchError, setFetchError] = useState(null)
   const breedList = Object.keys(dogList)
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(`https://dog.ceo/api/breeds/list/all`)
-        if(!res.ok) throw new Error('Fetch request did return data as expected.')
+        if(!res.ok) throw Error('Fetch request did return data as expected.')
 
         const data = await res.json()
 
         setDogList(data.message)
-        setErr(null)
+        setFetchError(null)
       } catch(err) {
-        setErr(err.message)
+        setFetchError(err.message)
       }
     })()
   }, [])
 
   return (
     <div>
-      {err ? (err.map(err => {
-        return (<span key={err.indexOf(err)}>{err}</span>)
-      })) : (breedList.map(breed => {
-        return(<span key={breedList.indexOf(breed)}>{breed} </span>)
-      }))}
+      {fetchError && <ErrorMessage error={fetchError} />}
+      {breedList.map(breed => <BreedLink key={breedList.indexOf(breed)} breed={breed} />)}
     </div>
   )
 }
