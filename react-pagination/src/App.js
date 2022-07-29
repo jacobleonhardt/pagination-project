@@ -9,6 +9,7 @@ function App() {
 
   const [dogList, setDogList] = useState({})
   const [startPic, setStartPic] = useState('')
+  const [selectBreed, setSelectBreed] = useState('')
   const [fetchError, setFetchError] = useState(null)
   const breedList = Object.keys(dogList)
 
@@ -41,6 +42,20 @@ function App() {
     }
   }
 
+  const getSelectedBreed = async () => {
+    try {
+      const res = await fetchError(`https://dog.ceo/api/breed/${selectBreed}/images`)
+      if(!res.ok) throw Error('Fetch image by breed did not return data as expected.')
+
+      const data = await res.json()
+
+      setSelectBreed(data.message)
+      setFetchError(null)
+    } catch(err) {
+      setFetchError(err.message)
+    }
+  }
+
   useEffect(() => {
     getBreedListings()
     getStartImage()
@@ -52,12 +67,12 @@ function App() {
         <Navigation />
         <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
           <button type="button" className='btn btn-dark' data-bs-dismiss="offcanvas" aria-label="Close"><ion-icon name="close"></ion-icon></button>
-          <List breedList={breedList} />
+          <List breedList={breedList} selectBreed={getSelectedBreed}/>
         </div>
       </header>
       <main>
         {fetchError && <ErrorMessage error={fetchError} />}
-        <Home pic={startPic} />
+        <Home startPic={startPic} selectBreed={selectBreed} />
       </main>
     </div>
   );

@@ -1,9 +1,13 @@
 import React from 'react'
 
-export const Home = ({ pic }) => {
+export const Home = ({ startPic, selectBreed }) => {
   return (
     <div>
-      <img className='w-50 p-3' src={pic} />
+      {selectBreed ? (
+        selectBreed.map(pic => {
+          return <img src={pic} />
+        })
+      ) : <img className='mw-30 m-3' src={startPic} />}
     </div>
   )
 }
