@@ -12,24 +12,38 @@ function App() {
   const [fetchError, setFetchError] = useState(null)
   const breedList = Object.keys(dogList)
 
+
+  const getBreedListings = async () => {
+    try {
+      const res = await fetch(`https://dog.ceo/api/breeds/list/all`)
+      if(!res.ok) throw Error('Fetch list request did not return data as expected.')
+
+      const data = await res.json()
+
+      setDogList(data.message)
+      setFetchError(null)
+    } catch(err) {
+      setFetchError(err.message)
+    }
+  }
+
+  const getStartImage = async () => {
+    try {
+      const res = await fetch(`https://dog.ceo/api/breeds/image/random`)
+      if(!res.ok) throw Error('Fetch image request did not return data as expected.')
+
+      const data = await res.json()
+
+      setStartPic(data.message)
+      setFetchError(null)
+    } catch(err) {
+      setFetchError(err.message)
+    }
+  }
+
   useEffect(() => {
-    (async () => {
-      try {
-        const listRes = await fetch(`https://dog.ceo/api/breeds/list/all`)
-        const startRes = await fetch(`https://dog.ceo/api/breeds/image/random`)
-        if(!listRes.ok) throw Error('Fetch list request did not return data as expected.')
-        if(!startRes.ok) throw Error('Fetch image request did not return data as expected.')
-
-        const listData = await listRes.json()
-        const startData = await startRes.json()
-
-        setDogList(listData.message)
-        setStartPic(startData.message)
-        setFetchError(null)
-      } catch(err) {
-        setFetchError(err.message)
-      }
-    })()
+    getBreedListings()
+    getStartImage()
   }, [])
 
   return (
