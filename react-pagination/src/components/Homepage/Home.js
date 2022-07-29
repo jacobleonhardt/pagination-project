@@ -1,7 +1,9 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 
-export const Home = () => {
+export const Home = ({ pic }) => {
   return (
-    <div>Home</div>
+    <div>
+      <img src={pic} />
+    </div>
   )
 }
