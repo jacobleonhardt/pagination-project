@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const BreedPics = ({breed}) => {
+export const BreedPics = ({data}) => {
   return (
-    <div>{breed}</div>
+    <div className="mw-25">
+      {data.map(pic => <img key={data.indexOf(pic)} src={pic} />)}
+    </div>
   )
 }
