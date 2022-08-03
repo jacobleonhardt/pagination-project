@@ -42,9 +42,9 @@ function App() {
     }
   }
 
-  const getSelectedBreed = async () => {
+  const getSelectedBreed = async (breed) => {
     try {
-      const res = await fetchError(`https://dog.ceo/api/breed/${selectBreed}/images`)
+      const res = await fetchError(`https://dog.ceo/api/breed/${breed}/images`)
       if(!res.ok) throw Error('Fetch image by breed did not return data as expected.')
 
       const data = await res.json()
@@ -62,17 +62,18 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App h-100">
       <header className='navbar bg-light fixed-top'>
         <Navigation />
         <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
           <button type="button" className='btn btn-dark' data-bs-dismiss="offcanvas" aria-label="Close"><ion-icon name="close"></ion-icon></button>
-          <List breedList={breedList} selectBreed={getSelectedBreed}/>
+          <List breedList={breedList} getSelectedBreed={getSelectedBreed}/>
         </div>
       </header>
-      <main>
+      <main className="mt-5 p-2 d-flex flex-column align-items-center">
         {fetchError && <ErrorMessage error={fetchError} />}
-        <Home startPic={startPic} selectBreed={selectBreed} />
+        { selectBreed ? <>TEST</>
+        : <Home startPic={startPic} selectBreed={selectBreed} />}
       </main>
     </div>
   );
