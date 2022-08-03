@@ -3,6 +3,7 @@ import { Navigation } from './components/navigation/Navigation';
 import { List } from './components/list/List';
 import { Home } from './components/homepage/Home';
 import { ErrorMessage } from './components/list/ErrorMessage'
+import { BreedPics } from './components/breedpics/BreedPics';
 import './App.css';
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
 
   const getSelectedBreed = async (breed) => {
     try {
-      const res = await fetchError(`https://dog.ceo/api/breed/${breed}/images`)
+      const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`)
       if(!res.ok) throw Error('Fetch image by breed did not return data as expected.')
 
       const data = await res.json()
@@ -62,7 +63,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App h-100">
+    <div className="App">
       <header className='navbar bg-light fixed-top'>
         <Navigation />
         <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -72,7 +73,7 @@ function App() {
       </header>
       <main className="mt-5 p-2 d-flex flex-column align-items-center">
         {fetchError && <ErrorMessage error={fetchError} />}
-        { selectBreed ? <>TEST</>
+        { selectBreed ? <BreedPics data={selectBreed} />
         : <Home startPic={startPic} selectBreed={selectBreed} />}
       </main>
     </div>
