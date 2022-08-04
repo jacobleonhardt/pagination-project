@@ -73,8 +73,10 @@ function App() {
       </header>
       <main className="mt-5 p-2 d-flex flex-column align-items-center">
         {fetchError && <ErrorMessage error={fetchError} />}
-        { selectBreed ? <BreedPics data={selectBreed} />
-        : <Home startPic={startPic} selectBreed={selectBreed} />}
+        <div className="container">
+          { selectBreed ? <BreedPics data={selectBreed} />
+          : <Home startPic={startPic} selectBreed={selectBreed} />}
+        </div>
       </main>
     </div>
   );
