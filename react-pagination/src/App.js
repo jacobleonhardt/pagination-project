@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react';
 import { Navigation } from './components/navigation/Navigation';
 import { List } from './components/list/List';
 import { Home } from './components/homepage/Home';
-import { ErrorMessage } from './components/list/ErrorMessage'
+import { ErrorMessage } from './components/list/ErrorMessage';
 import { BreedPics } from './components/breedpics/BreedPics';
+import ReactPaginate from 'react-paginate';
 import './App.css';
 
 function App() {
-
   const [dogList, setDogList] = useState({})
   const [startPic, setStartPic] = useState('')
   const [selectBreed, setSelectBreed] = useState('')
   const [fetchError, setFetchError] = useState(null)
+  const [breedResults, setBreedResults] = useState(null)
+  const [pageCount, setPageCount] = useState(0)
+  const [itemOfset, setItemOfset] = useState(0)
+  const itemsPerPage = 30
   const breedList = Object.keys(dogList)
-
 
   const getBreedListings = async () => {
     try {
@@ -57,10 +60,25 @@ function App() {
     }
   }
 
+  const pagination = () => {
+    const endPoint = itemOfset + itemsPerPage
+    setBreedResults(selectBreed.slice(itemOfset, endPoint))
+    setPageCount(Math.ceil(selectBreed.length / itemsPerPage))
+  }
+
+  const handlePageChange = () => {
+
+  }
+
   useEffect(() => {
     getBreedListings()
     getStartImage()
   }, [])
+
+
+  useMemo(() => {
+    pagination()
+  }, [itemOfset, itemsPerPage])
 
   return (
     <div className="App">
@@ -74,7 +92,16 @@ function App() {
       <main className="mt-5 p-2 d-flex flex-column align-items-center">
         {fetchError && <ErrorMessage error={fetchError} />}
         <div className="container">
-          { selectBreed ? <BreedPics data={selectBreed} />
+          { selectBreed ? (<>
+                <BreedPics data={selectBreed} />
+                <ReactPaginate
+                  pageCount={pageCount}
+                  onPageChange={handlePageChange}
+                  pageRangeDisplayed={5}
+                  nextLabel={<ion-icon name="arrow-dropright"></ion-icon>}
+                  previousLabel={<ion-icon name="arrow-dropleft"></ion-icon>}
+                />
+            </>)
           : <Home startPic={startPic} selectBreed={selectBreed} />}
         </div>
       </main>

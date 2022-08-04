@@ -1,6 +1,6 @@
 import React from 'react'
-export const List = ({breedList, getSelectedBreed}) => {
 
+export const List = ({breedList, getSelectedBreed}) => {
   return (
       <ul className='list-group overflow-auto'>
         {breedList.map(breed => {
