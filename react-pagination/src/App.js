@@ -12,10 +12,6 @@ function App() {
   const [startPic, setStartPic] = useState('')
   const [selectBreed, setSelectBreed] = useState('')
   const [fetchError, setFetchError] = useState(null)
-  const [breedResults, setBreedResults] = useState(null)
-  const [pageCount, setPageCount] = useState(0)
-  const [itemOfset, setItemOfset] = useState(0)
-  const itemsPerPage = 30
   const breedList = Object.keys(dogList)
 
   const getBreedListings = async () => {
@@ -60,25 +56,10 @@ function App() {
     }
   }
 
-  const pagination = () => {
-    const endPoint = itemOfset + itemsPerPage
-    setBreedResults(selectBreed.slice(itemOfset, endPoint))
-    setPageCount(Math.ceil(selectBreed.length / itemsPerPage))
-  }
-
-  const handlePageChange = () => {
-
-  }
-
   useEffect(() => {
     getBreedListings()
     getStartImage()
   }, [])
-
-
-  useMemo(() => {
-    pagination()
-  }, [itemOfset, itemsPerPage])
 
   return (
     <div className="App">
@@ -93,14 +74,16 @@ function App() {
         {fetchError && <ErrorMessage error={fetchError} />}
         <div className="container">
           { selectBreed ? (<>
-                <BreedPics data={selectBreed} />
-                <ReactPaginate
-                  pageCount={pageCount}
-                  onPageChange={handlePageChange}
-                  pageRangeDisplayed={5}
-                  nextLabel={<ion-icon name="arrow-dropright"></ion-icon>}
-                  previousLabel={<ion-icon name="arrow-dropleft"></ion-icon>}
-                />
+              <BreedPics data={selectBreed} />
+              <ReactPaginate
+                totalCountOfItemsInData={null}
+                pageSize={null}
+                siblingCount={1}
+                currenPage={null}
+                onPageChange={null}
+                nextLabel={<ion-icon name="arrow-dropright"></ion-icon>}
+                previousLabel={<ion-icon name="arrow-dropleft"></ion-icon>}
+              />
             </>)
           : <Home startPic={startPic} selectBreed={selectBreed} />}
         </div>

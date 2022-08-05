@@ -5,9 +5,9 @@ export const Home = ({ startPic, selectBreed }) => {
     <div>
       {selectBreed ? (
         selectBreed.map(pic => {
-          return <img src={pic} />
+          return <img src={pic} alt=""/>
         })
-      ) : <img className='mh-50' src={startPic} />}
+      ) : <img className='mh-50' src={startPic} alt="" />}
     </div>
   )
 }
