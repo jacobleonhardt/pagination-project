@@ -76,8 +76,8 @@ function App() {
           { selectBreed ? (<>
               <BreedPics data={selectBreed} />
               <ReactPaginate
-                totalCountOfItemsInData={null}
-                pageSize={null}
+                totalCountOfItemsInData={selectBreed.length}
+                pageSize={30}
                 siblingCount={1}
                 currenPage={null}
                 onPageChange={null}

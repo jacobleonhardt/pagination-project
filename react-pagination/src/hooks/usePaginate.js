@@ -1,5 +1,7 @@
 import { useMemo } from "react"
 
+const DOTS = '...'
+
 const rangeOfItemsToDisplay = (startPoint, endPoint) => {
   const lengthOfArray = (endPoint - startPoint)
   const rangeArray = Array.from({lengthOfArray}, (_, index) => index + startPoint)
@@ -16,7 +18,31 @@ export const usePagination = ({totalCountOfItemsInData, pageSize, siblingCount, 
     // range/array that is the first page -> however many pages we have.
     if(totalNumberOfPages < numberOfPagesToDisplay) return rangeOfItemsToDisplay(1, totalNumberOfPages)
 
-    
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalCountOfItemsInData)
+
+    const showLeftDots = leftSiblingIndex > 2
+    const showRightDots = rightSiblingIndex < (totalCountOfItemsInData - 2)
+    const firstPageIndex = 1
+    const lastPageIndex = totalCountOfItemsInData
+    const itemCount = 3 + (2 * siblingCount)
+
+    if (!showLeftDots && showRightDots) {
+      const leftRange = pageRange(1, itemCount)
+
+      return [...leftRange, DOTS, totalNumberOfPages]
+    }
+
+    if (showLeftDots && showRightDots) {
+      const middleRange = pageRange(leftSiblingIndex, rightSiblingIndex)
+
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
+    }
+
+    if (showLeftDots && !showRightDots) {
+      const rightRange = pageRange(lastPageIndex - itemCount, lastPageIndex)
+      return [firstPageIndex, DOTS, ...rightRange]
+    }
 
   }, [totalCount, pageSize, currentPage])
 
