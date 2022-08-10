@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigation } from './components/navigation/Navigation';
 import { List } from './components/list/List';
 import { Home } from './components/homepage/Home';
 import { ErrorMessage } from './components/list/ErrorMessage';
 import { BreedPics } from './components/breedpics/BreedPics';
-import ReactPaginate from 'react-paginate';
+import { Pagination } from './components/Pagination';
 import './App.css';
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
   const [startPic, setStartPic] = useState('')
   const [selectBreed, setSelectBreed] = useState('')
   const [fetchError, setFetchError] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
   const breedList = Object.keys(dogList)
 
   const getBreedListings = async () => {
@@ -75,14 +76,12 @@ function App() {
         <div className="container">
           { selectBreed ? (<>
               <BreedPics data={selectBreed} />
-              <ReactPaginate
-                totalCountOfItemsInData={selectBreed.length}
-                pageSize={30}
-                siblingCount={1}
-                currenPage={null}
-                onPageChange={null}
-                nextLabel={<ion-icon name="arrow-dropright"></ion-icon>}
-                previousLabel={<ion-icon name="arrow-dropleft"></ion-icon>}
+              <Pagination
+              totalCountOfItemsInData={selectBreed.length}
+              pageSize={30}
+              siblingCount={1}
+              currentPage={currentPage}
+              onPageChange={page => setCurrentPage(page)}
               />
             </>)
           : <Home startPic={startPic} selectBreed={selectBreed} />}
