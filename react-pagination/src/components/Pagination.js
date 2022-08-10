@@ -13,13 +13,17 @@ export const Pagination = ({ totalCountOfItemsInData, pageSize, siblingCount, cu
 
   return (
     <ul>
-      <li disabled={currentPage === 1} onClick={() => prevClick(currentPage)}></li>
+      <li disabled={currentPage === 1} onClick={() => prevClick(currentPage)}>
+        <ion-icon name="arrow-dropleft"></ion-icon>
+      </li>
       {paginationRange.map( page => {
         if (page === DOTS) return <li>{DOTS}</li>
 
         return <li selected={page === currentPage} onClick={() => onPageChange(page)}>{page}</li>
       })}
-      <li disabled={currentPage === lastPage} onClick={() => nextClick(currentPage)}></li>
+      <li disabled={currentPage === lastPage} onClick={() => nextClick(currentPage)}>
+        <ion-icon name="arrow-dropright"></ion-icon>
+      </li>
     </ul>
   )
 }
