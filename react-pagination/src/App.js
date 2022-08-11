@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Navigation } from './components/navigation/Navigation';
 import { List } from './components/list/List';
 import { Home } from './components/homepage/Home';
@@ -14,6 +14,7 @@ function App() {
   const [fetchError, setFetchError] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const breedList = Object.keys(dogList)
+  const pageSize = 9
 
   const getBreedListings = async () => {
     try {
@@ -57,6 +58,13 @@ function App() {
     }
   }
 
+  const dogPictureData = useMemo(() => {
+    const firstPage = (currentPage - 1) * pageSize
+    const lastPage = firstPage + pageSize
+
+    return selectBreed.slice(firstPage, lastPage)
+  }, [currentPage])
+
   useEffect(() => {
     getBreedListings()
     getStartImage()
@@ -75,13 +83,14 @@ function App() {
         {fetchError && <ErrorMessage error={fetchError} />}
         <div className="container">
           { selectBreed ? (<>
-              <BreedPics data={selectBreed} />
+              {dogPictureData}
+              {/* <BreedPics data={dogPictureData} /> */}
               <Pagination
               totalCountOfItemsInData={selectBreed.length}
-              pageSize={30}
+              pageSize={pageSize}
               siblingCount={1}
               currentPage={currentPage}
-              onPageChange={page => setCurrentPage(page)}
+              onPageChange={ page => setCurrentPage(page)}
               />
             </>)
           : <Home startPic={startPic} selectBreed={selectBreed} />}
