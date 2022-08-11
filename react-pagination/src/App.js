@@ -63,7 +63,7 @@ function App() {
     const lastPage = firstPage + pageSize
 
     return selectBreed.slice(firstPage, lastPage)
-  }, [currentPage])
+  }, [selectBreed, currentPage])
 
   useEffect(() => {
     getBreedListings()
@@ -83,8 +83,7 @@ function App() {
         {fetchError && <ErrorMessage error={fetchError} />}
         <div className="container">
           { selectBreed ? (<>
-              {dogPictureData}
-              {/* <BreedPics data={dogPictureData} /> */}
+              <BreedPics data={dogPictureData} />
               <Pagination
               totalCountOfItemsInData={selectBreed.length}
               pageSize={pageSize}
