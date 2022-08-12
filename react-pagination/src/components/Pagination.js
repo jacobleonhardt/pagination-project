@@ -6,8 +6,8 @@ export const Pagination = ({ totalCountOfItemsInData, pageSize, siblingCount, cu
 
   if(paginationRange.length < 2) return null
 
-  const nextClick = () => onPageChange(currentPage + 1)
   const prevClick = () => onPageChange(currentPage - 1)
+  const nextClick = () => onPageChange(currentPage + 1)
 
   const lastPage = paginationRange[paginationRange.length - 1]
 
@@ -16,10 +16,10 @@ export const Pagination = ({ totalCountOfItemsInData, pageSize, siblingCount, cu
       <li className="page-item" disabled={currentPage === 1} onClick={() => prevClick(currentPage)}>
         <ion-icon name="arrow-dropleft"></ion-icon>
       </li>
-      {paginationRange.map( page => {
-        if (page === DOTS) return <li>{DOTS}</li>
+      {paginationRange.map( (page, i) => {
+        if (page === DOTS) return <li key={i} className="page-item"><span className="page-link">{DOTS}</span></li>
 
-        return <li className="page-item" selected={page === currentPage} onClick={() => onPageChange(page)}>
+        return <li key={i} className="page-item" selected={page === currentPage} onClick={() => onPageChange(page)}>
                 <span className="page-link">{page}</span>
               </li>
       })}
