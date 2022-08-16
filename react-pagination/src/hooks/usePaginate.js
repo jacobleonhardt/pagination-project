@@ -3,9 +3,9 @@ import { useMemo } from "react"
 export const DOTS = '...'
 
 const rangeOfItemsToDisplay = (startPoint, endPoint) => {
-  const lengthOfArray = (endPoint - startPoint) + 1
-  const rangeArray = Array.from({lengthOfArray}, (_, index) => index + startPoint)
-  console.log('IN FUNC:: ', {lengthOfArray})
+  const length = (endPoint - startPoint) + 1
+  const rangeArray = Array.from({length}, (_, index) => index + startPoint)
+  console.log('IN FUNC:: ', {length})
   return rangeArray
 }
 

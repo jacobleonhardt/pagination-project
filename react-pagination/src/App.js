@@ -88,7 +88,7 @@ function App() {
               <Pagination
               totalCountOfItemsInData={selectBreed.length}
               pageSize={pageSize}
-              siblingCount={2}
+              siblingCount={1}
               currentPage={currentPage}
               onPageChange={ page => setCurrentPage(page)}
               />
