@@ -33,14 +33,13 @@ export const usePagination = (totalCountOfItemsInData, pageSize, siblingCount, c
 
     if (showLeftDots && showRightDots) {
       const middleRange = rangeOfItemsToDisplay(leftSiblingIndex, rightSiblingIndex)
-      console.log('>>>>> MID')
+
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
 
     if (showLeftDots && !showRightDots) {
       const itemCount = 2 + siblingCount
       const rightRange = rangeOfItemsToDisplay((lastPageIndex - itemCount) + 1, lastPageIndex)
-      console.log('##### END')
 
       return [firstPageIndex, DOTS, ...rightRange]
     }
