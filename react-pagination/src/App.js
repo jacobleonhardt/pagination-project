@@ -4,8 +4,8 @@ import { List } from './components/list/List';
 import { Home } from './components/homepage/Home';
 import { ErrorMessage } from './components/list/ErrorMessage';
 import { BreedPics } from './components/breedpics/BreedPics';
-// import { Pagination } from './components/Pagination';
-import Pagination from './components/Pagination';
+import { Pagination } from './components/Pagination';
+// import Pagination from './components/Pagination';
 import './App.css';
 
 function App() {
@@ -85,19 +85,13 @@ function App() {
         <div className="container">
           { selectBreed ? (<>
               <BreedPics data={dogPictureData} />
-              {/* <Pagination
+              <Pagination
               totalCountOfItemsInData={selectBreed.length}
               pageSize={pageSize}
-              siblingCount={1}
+              siblingCount={2}
               currentPage={currentPage}
               onPageChange={ page => setCurrentPage(page)}
-              /> */}
-              <Pagination
-                  className="pagination-bar"
-                  currentPage={currentPage}
-                  totalCount={selectBreed.length}
-                  pageSize={pageSize}
-                  onPageChange={page => setCurrentPage(page)} />
+              />
             </>)
           : <Home startPic={startPic} selectBreed={selectBreed} />}
         </div>

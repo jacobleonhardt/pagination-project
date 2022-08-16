@@ -1,142 +1,53 @@
-// import { useMemo } from "react"
-
-// export const DOTS = '...'
-
-// const rangeOfItemsToDisplay = (startPoint, endPoint) => {
-//   const lengthOfArray = (endPoint - startPoint) + 1
-//   const rangeArray = Array.from({lengthOfArray}, (_, index) => index + startPoint)
-//   console.log('IN FUNC:: ', lengthOfArray, '||', rangeArray)
-//   return rangeArray
-// }
-
-// export const usePagination = ({totalCountOfItemsInData, pageSize, siblingCount, currentPage}) => {
-//   const pageRange = useMemo(() => {
-//     const totalNumberOfPages = Math.ceil(totalCountOfItemsInData / pageSize)
-//     // first page, current page, last page, and dots on either side of current page = 5
-//     const numberOfPagesToDisplay = (siblingCount + 5)
-
-//     // If the totalNumberOfPages we have is < our numberOfPagesToDisplay, we just want to return a
-//     // range/array that is the first page -> however many pages we have.
-//     if (totalNumberOfPages < numberOfPagesToDisplay) {
-//       return rangeOfItemsToDisplay(1, totalNumberOfPages)
-//     }
-
-//     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
-//     const rightSiblingIndex = Math.min(currentPage + siblingCount, totalCountOfItemsInData)
-
-//     const showLeftDots = leftSiblingIndex > 2
-//     const showRightDots = rightSiblingIndex < (totalCountOfItemsInData - 2)
-//     const firstPageIndex = 1
-//     const lastPageIndex = totalCountOfItemsInData
-//     const itemCount = 3 + (2 * siblingCount)
-
-//     if (!showLeftDots && showRightDots) {
-//       const leftRange = rangeOfItemsToDisplay(1, itemCount)
-//       return [...leftRange, DOTS, totalNumberOfPages]
-//     }
-
-//     if (showLeftDots && showRightDots) {
-//       const middleRange = rangeOfItemsToDisplay(leftSiblingIndex, rightSiblingIndex)
-
-//       console.log('MID: ', middleRange)
-//       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
-//     }
-
-//     if (showLeftDots && !showRightDots) {
-//       const rightRange = rangeOfItemsToDisplay((lastPageIndex - itemCount) + 1, lastPageIndex)
-//       console.log('RIGHT: ', rightRange)
-
-//       return [firstPageIndex, DOTS, ...rightRange]
-//     }
-
-//   }, [totalCountOfItemsInData, pageSize, siblingCount, currentPage])
-
-//   return pageRange;
-// }
-
 import { useMemo } from "react"
 
 export const DOTS = '...'
 
-const range = (start, end) => {
-  let length = end - start + 1;
-  /*
-  	Create an array of certain length and set the elements within it from
-    start value to end value.
-  */
-  return Array.from({ length }, (_, idx) => idx + start);
-};
+const rangeOfItemsToDisplay = (startPoint, endPoint) => {
+  const lengthOfArray = (endPoint - startPoint) + 1
+  const rangeArray = Array.from({lengthOfArray}, (_, index) => index + startPoint)
+  console.log('IN FUNC:: ', {lengthOfArray})
+  return rangeArray
+}
 
-export const usePagination = ({
-  totalCount,
-  pageSize,
-  siblingCount = 1,
-  currentPage
-}) => {
-  const paginationRange = useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / pageSize);
+export const usePagination = (totalCountOfItemsInData, pageSize, siblingCount, currentPage) => {
+  const pageRange = useMemo(() => {
+    const totalNumberOfPages = Math.ceil(totalCountOfItemsInData / pageSize)
+    const numberOfPagesToDisplay = (siblingCount + 5)
 
-    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
-    const totalPageNumbers = siblingCount + 5;
-
-    /*
-      Case 1:
-      If the number of pages is less than the page numbers we want to show in our
-      paginationComponent, we return the range [1..totalPageCount]
-    */
-    if (totalPageNumbers >= totalPageCount) {
-      return range(1, totalPageCount);
+    if (totalNumberOfPages < numberOfPagesToDisplay) {
+      return rangeOfItemsToDisplay(1, totalNumberOfPages)
     }
 
-    /*
-    	Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
-    */
-    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-    const rightSiblingIndex = Math.min(
-      currentPage + siblingCount,
-      totalPageCount
-    );
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalCountOfItemsInData)
 
-    /*
-      We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and totalPageCount. Hence we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
-    */
-    const shouldShowLeftDots = leftSiblingIndex > 2;
-    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
+    const showLeftDots = leftSiblingIndex > 2
+    const showRightDots = rightSiblingIndex < (totalCountOfItemsInData - 2)
+    const firstPageIndex = 1
+    const lastPageIndex = totalCountOfItemsInData
 
-    const firstPageIndex = 1;
-    const lastPageIndex = totalPageCount;
-
-    /*
-    	Case 2: No left dots to show, but rights dots to be shown
-    */
-    if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftItemCount = 3 + 2 * siblingCount;
-      let leftRange = range(1, leftItemCount);
-
-      return [...leftRange, DOTS, totalPageCount];
+    if (!showLeftDots && showRightDots) {
+      const itemCount = 3 + (2 * siblingCount)
+      const leftRange = rangeOfItemsToDisplay(1, itemCount)
+      return [...leftRange, DOTS, totalNumberOfPages]
     }
 
-    /*
-    	Case 3: No right dots to show, but left dots to be shown
-    */
-    if (shouldShowLeftDots && !shouldShowRightDots) {
+    if (showLeftDots && showRightDots) {
+      const middleRange = rangeOfItemsToDisplay(leftSiblingIndex, rightSiblingIndex)
 
-      let rightItemCount = 3 + 2 * siblingCount;
-      let rightRange = range(
-        totalPageCount - rightItemCount + 1,
-        totalPageCount
-      );
-      return [firstPageIndex, DOTS, ...rightRange];
+      console.log('MID: ', middleRange)
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
 
-    /*
-    	Case 4: Both left and right dots to be shown
-    */
-    if (shouldShowLeftDots && shouldShowRightDots) {
-      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
-      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
-    }
-  }, [totalCount, pageSize, siblingCount, currentPage]);
+    if (showLeftDots && !showRightDots) {
+      const itemCount = 3 + (2 * siblingCount)
+      const rightRange = rangeOfItemsToDisplay((lastPageIndex - itemCount) + 1, lastPageIndex)
+      console.log('RIGHT: ', rightRange)
 
-  return paginationRange;
-};
+      return [firstPageIndex, DOTS, ...rightRange]
+    }
+
+  }, [totalCountOfItemsInData, pageSize, siblingCount, currentPage])
+
+  return pageRange;
+}
