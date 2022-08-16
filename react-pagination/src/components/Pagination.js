@@ -13,7 +13,7 @@ export const Pagination = ({ totalCountOfItemsInData, pageSize, siblingCount, cu
   return (
     <ul className="pagination justify-content-center">
       <li className="page-item">
-        <button disabled={currentPage == 1} onClick={() => prevClick(currentPage)}>
+        <button disabled={currentPage === 1} onClick={() => prevClick(currentPage)}>
           <ion-icon name="arrow-dropleft"></ion-icon>
         </button>
       </li>
@@ -25,7 +25,7 @@ export const Pagination = ({ totalCountOfItemsInData, pageSize, siblingCount, cu
               </li>
       })}
       <li className="page-item">
-        <button disabled={currentPage == lastPage} onClick={() => nextClick(currentPage)}>
+        <button disabled={currentPage === lastPage} onClick={() => nextClick(currentPage)}>
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
       </li>
