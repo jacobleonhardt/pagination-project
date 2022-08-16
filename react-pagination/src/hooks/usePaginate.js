@@ -5,7 +5,6 @@ export const DOTS = '...'
 const rangeOfItemsToDisplay = (startPoint, endPoint) => {
   const length = (endPoint - startPoint) + 1
   const rangeArray = Array.from({length}, (_, index) => index + startPoint)
-  console.log('IN FUNC:: ', {length})
   return rangeArray
 }
 
@@ -19,30 +18,29 @@ export const usePagination = (totalCountOfItemsInData, pageSize, siblingCount, c
     }
 
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
-    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalCountOfItemsInData)
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalNumberOfPages)
 
     const showLeftDots = leftSiblingIndex > 2
-    const showRightDots = rightSiblingIndex < (totalCountOfItemsInData - 2)
+    const showRightDots = rightSiblingIndex <= (totalNumberOfPages - 2)
     const firstPageIndex = 1
-    const lastPageIndex = totalCountOfItemsInData
+    const lastPageIndex = totalNumberOfPages
 
     if (!showLeftDots && showRightDots) {
-      const itemCount = 3 + (2 * siblingCount)
+      const itemCount = 2 + siblingCount
       const leftRange = rangeOfItemsToDisplay(1, itemCount)
       return [...leftRange, DOTS, totalNumberOfPages]
     }
 
     if (showLeftDots && showRightDots) {
       const middleRange = rangeOfItemsToDisplay(leftSiblingIndex, rightSiblingIndex)
-
-      console.log('MID: ', middleRange)
+      console.log('>>>>> MID')
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
 
     if (showLeftDots && !showRightDots) {
-      const itemCount = 3 + (2 * siblingCount)
+      const itemCount = 2 + siblingCount
       const rightRange = rangeOfItemsToDisplay((lastPageIndex - itemCount) + 1, lastPageIndex)
-      console.log('RIGHT: ', rightRange)
+      console.log('##### END')
 
       return [firstPageIndex, DOTS, ...rightRange]
     }
