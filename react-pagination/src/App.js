@@ -68,10 +68,10 @@ function App() {
     setCurrentPage(1)
   }, [selectBreed])
 
-  useEffect(() => {
-    getBreedListings()
-    getStartImage()
-  }, [])
+  // useEffect(() => {
+  //   getBreedListings()
+  //   getStartImage()
+  // }, [])
 
   return (
     <div className="App">
