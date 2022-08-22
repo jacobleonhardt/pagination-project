@@ -66,6 +66,11 @@ function App() {
     return selectBreed.slice(firstPage, lastPage)
   }, [selectBreed, currentPage])
 
+
+  useMemo(() => {
+    setCurrentPage(1)
+  }, [selectBreed])
+
   useEffect(() => {
     getBreedListings()
     getStartImage()
