@@ -68,10 +68,13 @@ function App() {
     setCurrentPage(1)
   }, [selectBreed])
 
-  // useEffect(() => {
-  //   getBreedListings()
-  //   getStartImage()
-  // }, [])
+  useEffect(() => {
+    getBreedListings()
+
+    // In dev mode you'll see this get called twice - a pic will appeare then get replaced by another.
+    // This is because of a feature React 18 has with useEffect in Strict Mode.
+    getStartImage()
+  }, [])
 
   return (
     <div className="App">
