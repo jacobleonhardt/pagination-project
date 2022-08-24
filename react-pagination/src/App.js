@@ -89,9 +89,9 @@ function App() {
           <List breedList={breedList} getSelectedBreed={getSelectedBreed}/>
         </div>
       </header>
-      <main className="mt-5 p-2 d-flex flex-column align-items-center">
+      <main className="mt-5 p-2">
         {fetchError && <ErrorMessage error={fetchError} />}
-        <div className="container">
+        <div className="container-fluid">
           { selectBreed ? (<>
               <BreedPics data={dogPictureData} />
               <Pagination
