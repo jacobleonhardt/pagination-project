@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Navigation } from './components/navigation/Navigation';
+import { Landing } from './components/landing/Landing';
 import { List } from './components/list/List';
 import { ErrorMessage } from './components/list/ErrorMessage';
 import { BreedPics } from './components/breedpics/BreedPics';
@@ -84,8 +85,8 @@ function App() {
     <div className="App">
       <header className='navbar bg-light fixed-top'>
         <Navigation />
-        <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-          <button type="button" className='btn btn-dark' data-bs-dismiss="offcanvas" aria-label="Close"><ion-icon name="close"></ion-icon></button>
+        <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+          <button type="button" className='btn btn-dark rounded-0' data-bs-dismiss="offcanvas" aria-label="Close"><ion-icon name="close"></ion-icon></button>
           <List breedList={breedList} getSelectedBreed={getSelectedBreed}/>
         </div>
       </header>
@@ -102,7 +103,7 @@ function App() {
               onPageChange={ page => setCurrentPage(page)}
               />
             </>)
-          : <img className='mh-50' src={startPic} alt="" />}
+          : <Landing startPic={startPic} />}
         </div>
       </main>
     </div>
