@@ -68,6 +68,10 @@ function App() {
     setCurrentPage(1)
   }, [selectBreed])
 
+  useMemo(() => {
+    window.scrollTo({top: 0})
+  }, [currentPage])
+
   useEffect(() => {
     getBreedListings()
 
